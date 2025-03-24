@@ -5,6 +5,8 @@ import com.mthree.petadoption.model.Request;
 
 import com.mthree.petadoption.repository.PetRepository;
 import java.util.List;
+
+import com.mthree.petadoption.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 import com.mthree.petadoption.repository.RequestRepository;
 
@@ -13,10 +15,12 @@ public class RequestDaoImpl implements RequestDao{
 
     private final RequestRepository requestRepository;
     private final PetRepository petRepository;
+    private final UserRepository userRepository;
 
-    public RequestDaoImpl(RequestRepository requestRepository, PetRepository petRepository) {
+    public RequestDaoImpl(RequestRepository requestRepository, PetRepository petRepository, UserRepository userRepository) {
         this.requestRepository = requestRepository;
         this.petRepository = petRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,6 +35,11 @@ public class RequestDaoImpl implements RequestDao{
 
     @Override
     public Request submitRequest(Request request) {
+        if(!userRepository.existsById(request.getUser().getUserId())){
+            throw new RuntimeException("Invalid User ID - request rejected");
+        } else if(!petRepository.existsById(request.getPet().getPetId())){
+            throw new RuntimeException("Invalid Pet ID - request rejected");
+        }
         return requestRepository.save(request);
     }
 

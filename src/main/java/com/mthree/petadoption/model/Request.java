@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Request {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long requestId;
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "pet_id")
@@ -51,7 +51,7 @@ public class Request {
   }
 
   public Long getRequestId() {
-    return requestId;
+    return id;
   }
 
   public void setPet(Pet pet) {
