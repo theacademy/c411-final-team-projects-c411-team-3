@@ -5,7 +5,9 @@ import com.mthree.petadoption.dao.RequestDaoImpl;
 import com.mthree.petadoption.model.Request;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RequestServiceImpl implements RequestService {
     private RequestDao requestDao;
 
@@ -20,7 +22,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request viewRequest(long requestId) {
-        return null;
+        return requestDao.viewRequest(requestId);
     }
 
     @Override
@@ -29,8 +31,8 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void updateRequest(Request request) {
-
+    public void updateRequest(Long requestId, Long petId, String status) {
+        requestDao.updateRequest(requestId, petId, status);
     }
 
     @Override

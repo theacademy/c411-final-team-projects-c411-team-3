@@ -12,7 +12,7 @@ public interface RequestService {
 
     Request submitRequest(Request request);
 
-    void updateRequest(Request request);
+    void updateRequest(Long requestId, Long petId, String status);
 
     void cancelRequest(long requestId);
 }
