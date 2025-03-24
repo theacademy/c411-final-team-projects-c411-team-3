@@ -1,9 +1,12 @@
 package com.mthree.petadoption.dao;
 
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
 import com.mthree.petadoption.repository.UserInfoRepository;
 import com.mthree.petadoption.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 public class UserDaoImpl implements UserDao{
 
@@ -36,7 +39,14 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void updateUserInfo(long userId) {
-        
+    public void updateUserInfo(long userId, UserInfo newInfo) {
+        UserInfo oldInfo =userInfoRepository.findByUser(userId);
+
+        oldInfo.setBirthDate(newInfo.getBirthDate());
+        oldInfo.setFirstName(newInfo.getFirstName());
+        oldInfo.setLastName(newInfo.getLastName());
+        oldInfo.setPhoneNumber(newInfo.getPhoneNumber());
+        userInfoRepository.save(oldInfo);
+
     }
 }

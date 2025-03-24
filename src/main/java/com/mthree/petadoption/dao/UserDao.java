@@ -2,6 +2,7 @@ package com.mthree.petadoption.dao;
 
 import com.mthree.petadoption.model.Request;
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
 
 
 public interface UserDao {
@@ -13,5 +14,5 @@ public interface UserDao {
 
     void updatePassword(long userId,String newPassword);
 
-    void updateUserInfo(long userId);
+    void updateUserInfo(long userId, UserInfo userInfo);
 }

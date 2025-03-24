@@ -10,9 +10,11 @@ public class UserInfo {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+
+
   @OneToOne
   @JoinColumn(name = "user_id")
-  private User user;
+  private Long userId;
 
   private String firstName;
   private String lastName;
@@ -23,12 +25,12 @@ public class UserInfo {
     return id;
   }
 
-  public User getUser() {
-    return user;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public String getFirstName() {
