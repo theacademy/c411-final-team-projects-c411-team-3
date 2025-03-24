@@ -12,7 +12,7 @@ public interface RequestDao {
 
     Request submitRequest(Request request);
 
-    void updateRequest(Request request);
+    Request updateRequest(Long requestId, Long petId, String status);
 
     void cancelRequest(long requestId);
 }
