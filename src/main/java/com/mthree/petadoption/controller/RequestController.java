@@ -25,8 +25,9 @@ public class RequestController {
     @PostMapping ("/api/requests")
     public Request addRequest(Request request){ return requestService.submitRequest(request);}
 
-    @PutMapping("/api/update")
-    public void updateRequest(Long requestId, Long petId, String status){requestService.updateRequest(requestId, petId, status);}
+    @PutMapping("/api/update/{id}")
+    public void updateRequest(@PathVariable("id") Long id, @RequestParam(required = false) Long petId,
+        @RequestParam(required = false) String status){requestService.updateRequest(id, petId, status);}
 
     @DeleteMapping("/api/{id}")
     public void deleteRequest(@PathVariable("id") Long id){ requestService.cancelRequest(id);}
