@@ -11,7 +11,7 @@ public interface UserDao {
 
     void deleteUser(long userId);
 
-    void updatePassword(long userId);
+    void updatePassword(long userId,String newPassword);
 
     void updateUserInfo(long userId);
 }
