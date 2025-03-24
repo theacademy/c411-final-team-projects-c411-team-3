@@ -1,6 +1,9 @@
 package com.mthree.petadoption.dao;
 
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.repository.UserInfoRepository;
+import com.mthree.petadoption.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserDaoImpl implements UserDao{
 
