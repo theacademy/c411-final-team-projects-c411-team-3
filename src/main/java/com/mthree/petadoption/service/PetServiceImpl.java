@@ -4,19 +4,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mthree.petadoption.dao.PetDAO;
 import com.mthree.petadoption.model.Pet;
-import com.mthree.petadoption.repository.PetRepository;
 
 @Service
 public class PetServiceImpl implements PetService {
-  private final PetRepository petRepository;
+  private final PetDAO petDAO;
 
-  public PetServiceImpl(PetRepository petRepository) {
-    this.petRepository = petRepository;
+  public PetServiceImpl(PetDAO petDAO) {
+    this.petDAO = petDAO;
   }
 
   @Override
   public List<Pet> getAllPets() {
-    return petRepository.findAll();
+    return petDAO.findAllPets();
   }
 }

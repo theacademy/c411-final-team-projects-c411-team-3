@@ -1,10 +1,13 @@
 package com.mthree.petadoption.dao;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import com.mthree.petadoption.model.Pet;
 import com.mthree.petadoption.repository.PetRepository;
 
-import java.util.List;
-
+@Repository
 public class PetDAOImpl implements PetDAO{
   private final PetRepository petRepository;
 
