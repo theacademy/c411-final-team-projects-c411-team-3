@@ -1,18 +1,12 @@
 package com.mthree.petadoption.service;
 
+import java.util.Optional;
+
 import com.mthree.petadoption.model.User;
-import com.mthree.petadoption.model.UserInfo;
 
 public interface UserService {
-
-    User getUser(long userId);
-
-    User createUser(User user);
-
-    void deleteUser(long userId);
-
-    void updatePassword(long userId,String newPassword);
-
-    void updateUserInfo(long userId, UserInfo userInfo);
-
+  Optional<User> getUserById(Long id);
+  User saveUser(User user);
+  boolean deleteUser(Long id);
+  Optional<User> updateUser(Long id, User user);
 }

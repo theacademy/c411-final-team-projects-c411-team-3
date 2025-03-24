@@ -1,13 +1,19 @@
 package com.mthree.petadoption.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+  private Long id;
 
   private String username;
   private String email;
@@ -20,8 +26,18 @@ public class User {
     ADMIN, ADOPTER
   }
 
+  public User() {
+  }
+
+  public User(String username, String email, String password, Role role) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+  }
+
   public Long getUserId() {
-    return userId;
+    return id;
   }
 
   public String getUsername() {
@@ -44,7 +60,9 @@ public class User {
     return password;
   }
 
-  public void setPassword(String password){this.password = password;}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   public Role getRole() {
     return role;

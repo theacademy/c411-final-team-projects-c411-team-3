@@ -1,24 +1,24 @@
 package com.mthree.petadoption.dao;
 
-import com.mthree.petadoption.model.User;
-import com.mthree.petadoption.model.UserInfo;
-import com.mthree.petadoption.repository.UserInfoRepository;
-import com.mthree.petadoption.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.repository.UserRepository;
+
+@Repository
 public class UserDaoImpl implements UserDao{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserInfoRepository userInfoRepository;
+    public UserDaoImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    public User getUser(long userId) {
-        return userRepository.findById(userId).orElse(null);
+    public Optional<User> getUser(long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
@@ -27,26 +27,16 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void deleteUser(long userId) {
-        userRepository.deleteById(userId);
+    public boolean deleteUser(long userId) {
+        if (userRepository.existsById(userId)){
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void updatePassword(long userId, String newPassword) {
-        User user = userRepository.findById(userId).orElseThrow();
-        user.setPassword(newPassword);
-        userRepository.save(user);
-    }
-
-    @Override
-    public void updateUserInfo(long userId, UserInfo newInfo) {
-        UserInfo oldInfo =userInfoRepository.findByUser(userId);
-
-        oldInfo.setBirthDate(newInfo.getBirthDate());
-        oldInfo.setFirstName(newInfo.getFirstName());
-        oldInfo.setLastName(newInfo.getLastName());
-        oldInfo.setPhoneNumber(newInfo.getPhoneNumber());
-        userInfoRepository.save(oldInfo);
-
+    public User updateUser(User user){
+        return userRepository.save(user);
     }
 }
