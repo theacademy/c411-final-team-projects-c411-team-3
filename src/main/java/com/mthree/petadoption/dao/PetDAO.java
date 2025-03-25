@@ -15,4 +15,6 @@ public interface PetDAO {
   Pet updatePet(Pet pet);
 
   boolean deletePet(Long id);
+
+  List<Pet> findPetBySpecies(String species);
 }

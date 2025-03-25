@@ -27,7 +27,8 @@ public class PetServiceImpl implements PetService {
   }
 
   @Override
-  public Pet savePet(Pet pet){
+  public Pet savePet(Pet pet) {
+    validatePet(pet);
     return petDAO.savePet(pet);
   }
 
@@ -37,9 +38,16 @@ public class PetServiceImpl implements PetService {
   }
 
   @Override
+  public List<Pet> getPetsBySpecies(String species) {
+    return petDAO.findPetBySpecies(species);
+  }
+
+  @Override
   public Optional<Pet> updatePet(Long id, Pet pet) {
+    validatePet(pet);
+
     Optional<Pet> existingPetOpt = petDAO.findPetById(id);
-    if (existingPetOpt.isPresent()){
+    if (existingPetOpt.isPresent()) {
       Pet existingPet = existingPetOpt.get();
       existingPet.setSpecies(pet.getSpecies());
       existingPet.setSize(pet.getSize());
@@ -57,5 +65,31 @@ public class PetServiceImpl implements PetService {
       return Optional.of(updatedPet);
     }
     return Optional.empty();
+  }
+
+  private void validatePet(Pet pet) {
+    if (pet.getSpecies() == null || pet.getSpecies().trim().isEmpty()) {
+      throw new IllegalArgumentException("Species is required.");
+    }
+    if (pet.getSex() == null || pet.getSex().trim().isEmpty()) {
+      throw new IllegalArgumentException("Sex is required.");
+    } else {
+      String sex = pet.getSex().trim().toLowerCase();
+      if (!sex.equals("m") && !sex.equals("f")) {
+        throw new IllegalArgumentException("Sex must be 'm' or 'f'.");
+      }
+    }
+    if (pet.getAge() == null || pet.getAge().trim().isEmpty()) {
+      throw new IllegalArgumentException("Age is required.");
+    }
+    if (pet.getPetName() == null || pet.getPetName().trim().isEmpty()) {
+      throw new IllegalArgumentException("Pet name is required.");
+    }
+    if (pet.getPrimaryBreed() == null || pet.getPrimaryBreed().trim().isEmpty()) {
+      throw new IllegalArgumentException("Primary breed is required.");
+    }
+    if (pet.getStatus() == null || pet.getStatus().trim().isEmpty()) {
+      throw new IllegalArgumentException("Status is required.");
+    }
   }
 }

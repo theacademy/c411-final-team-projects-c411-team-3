@@ -11,4 +11,5 @@ public interface PetService {
   Pet savePet(Pet pet);
   Optional<Pet> updatePet(Long id, Pet pet);
   boolean deletePet(Long id);
+  List<Pet> getPetsBySpecies(String species);
 }

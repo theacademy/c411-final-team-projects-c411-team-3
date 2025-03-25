@@ -41,6 +41,11 @@ public class PetDAOImpl implements PetDAO {
   }
 
   @Override
+  public List<Pet> findPetBySpecies(String species) {
+    return petRepository.findBySpecies(species);
+  }
+
+  @Override
   public Pet updatePet(Pet pet) {
     return petRepository.save(pet);
   }
