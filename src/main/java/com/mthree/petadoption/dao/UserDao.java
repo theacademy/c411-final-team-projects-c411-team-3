@@ -3,6 +3,7 @@ package com.mthree.petadoption.dao;
 import java.util.Optional;
 
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
 
 
 public interface UserDao {
@@ -13,4 +14,8 @@ public interface UserDao {
     boolean deleteUser(long userId);
 
     User updateUser(User user);
+
+    Optional<UserInfo> findByUserId(Long userId);
+
+    UserInfo updateUserInfo(UserInfo userInfo);
 }

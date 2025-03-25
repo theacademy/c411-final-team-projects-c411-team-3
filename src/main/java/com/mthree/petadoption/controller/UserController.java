@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
 import com.mthree.petadoption.service.UserService;
 
 @RestController
@@ -56,5 +57,19 @@ public class UserController {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.notFound().build();
+  }
+
+  @GetMapping("{id}/info")
+  public ResponseEntity<UserInfo> getUserInfo(@PathVariable Long id) {
+    Optional<UserInfo> userInfoOptional = userService.getUserInfoByUserId(id);
+    return userInfoOptional.map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/{id}/info")
+  public ResponseEntity<UserInfo> updateUserInfo(@PathVariable Long id, @RequestBody UserInfo userInfo) {
+    Optional<UserInfo> updatedUserInfo = userService.updateUserInfo(id, userInfo);
+    return updatedUserInfo.map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 }

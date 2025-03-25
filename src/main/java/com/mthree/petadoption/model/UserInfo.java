@@ -2,6 +2,11 @@ package com.mthree.petadoption.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,18 +17,24 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_info")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class UserInfo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   @OneToOne
+  @JsonIgnore
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
-
+  @Column(name = "firstName", nullable = false, length = 50)
   private String firstName;
+  @Column(name = "lastName", nullable = false, length = 50)
   private String lastName;
+  @Column(name = "phone_number", length = 15)
   private String phoneNumber;
+  @Column(name = "birthDate")
   private LocalDate birthDate;
 
   public UserInfo() {
