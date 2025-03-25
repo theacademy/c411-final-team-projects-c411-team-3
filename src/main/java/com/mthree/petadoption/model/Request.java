@@ -83,5 +83,7 @@ public class Request {
   public void setStatus(Status status) {
     this.status = status;
   }
+
+  public void setRequestId(Long id){this.id = id;}
 }
 

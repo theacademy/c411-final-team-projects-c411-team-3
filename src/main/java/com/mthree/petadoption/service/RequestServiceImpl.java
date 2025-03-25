@@ -5,11 +5,13 @@ import com.mthree.petadoption.dao.RequestDaoImpl;
 import com.mthree.petadoption.model.Request;
 
 import java.util.List;
+
+import com.mthree.petadoption.model.User;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RequestServiceImpl implements RequestService {
-    private RequestDao requestDao;
+    private final RequestDao requestDao;
 
     public RequestServiceImpl(RequestDaoImpl requestDao) {
         this.requestDao = requestDao;

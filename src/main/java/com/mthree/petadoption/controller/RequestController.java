@@ -2,6 +2,8 @@ package com.mthree.petadoption.controller;
 
 import com.mthree.petadoption.model.Request;
 import com.mthree.petadoption.service.RequestService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,21 +17,34 @@ public class RequestController {
     }
 
     @GetMapping("/api/requests")
-    public List<Request> getAllRequests(){
-        return requestService.listAllRequests();
+    public ResponseEntity<List<Request>> getAllRequests(){
+        List<Request> requestList = requestService.listAllRequests();
+        return ResponseEntity.status(HttpStatus.OK).body(requestList);
     }
 
-    @GetMapping("/api/requests/{id}")
-    public Request getRequestById(@PathVariable("id") Long id){return requestService.viewRequest(id);}
+    @GetMapping("/api/request/{id}")
+    public ResponseEntity<Request> getRequestById(@PathVariable("id") Long id){
+        Request request = requestService.viewRequest(id);
+        return ResponseEntity.status(HttpStatus.OK).body(request);
+    }
 
-    @PostMapping ("/api/requests")
-    public Request addRequest(Request request){ return requestService.submitRequest(request);}
+    @PostMapping ("/api/request")
+    public ResponseEntity<Void> addRequest(Request request){
+        requestService.submitRequest(request);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
 
-    @PutMapping("/api/update/{id}")
-    public void updateRequest(@PathVariable("id") Long id, @RequestParam(required = false) Long petId,
-        @RequestParam(required = false) String status){requestService.updateRequest(id, petId, status);}
+    @PutMapping("/api/request/{id}")
+    public ResponseEntity<Void> updateRequest(@PathVariable("id") Long id, @RequestParam(required = false) Long petId,
+        @RequestParam(required = false) String status){
+        requestService.updateRequest(id, petId, status);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-    @DeleteMapping("/api/{id}")
-    public void deleteRequest(@PathVariable("id") Long id){ requestService.cancelRequest(id);}
+    @DeleteMapping("/api/request/{id}")
+    public ResponseEntity<Void> deleteRequest(@PathVariable("id") Long id){
+        requestService.cancelRequest(id);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
 
 }
