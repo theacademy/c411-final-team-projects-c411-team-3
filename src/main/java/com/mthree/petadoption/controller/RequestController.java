@@ -22,7 +22,7 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.OK).body(requestList);
     }
 
-    @GetMapping("/api/requests/{id}")
+    @GetMapping("/api/request/{id}")
     public ResponseEntity<Request> getRequestById(@PathVariable("id") Long id){
         Request request = requestService.viewRequest(id);
         return ResponseEntity.status(HttpStatus.OK).body(request);
@@ -34,14 +34,14 @@ public class RequestController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/update/{id}")
+    @PutMapping("/api/request/{id}")
     public ResponseEntity<Void> updateRequest(@PathVariable("id") Long id, @RequestParam(required = false) Long petId,
         @RequestParam(required = false) String status){
         requestService.updateRequest(id, petId, status);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/{id}")
+    @DeleteMapping("/api/request/{id}")
     public ResponseEntity<Void> deleteRequest(@PathVariable("id") Long id){
         requestService.cancelRequest(id);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
