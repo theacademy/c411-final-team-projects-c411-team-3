@@ -1,17 +1,21 @@
 package com.mthree.petadoption.dao;
 
-import com.mthree.petadoption.model.Request;
+import java.util.Optional;
+
 import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
 
 
 public interface UserDao {
-    User getUser(long userId);
+    Optional<User> getUser(long userId);
 
     User createUser(User user);
 
-    void deleteUser(long userId);
+    boolean deleteUser(long userId);
 
-    void updatePassword(long userId);
+    User updateUser(User user);
 
-    void updateUserInfo(long userId);
+    Optional<UserInfo> findByUserId(Long userId);
+
+    UserInfo updateUserInfo(UserInfo userInfo);
 }

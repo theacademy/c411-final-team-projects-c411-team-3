@@ -1,30 +1,57 @@
 package com.mthree.petadoption.dao;
 
-import com.mthree.petadoption.model.User;
+import java.util.Optional;
 
-public class UserDaoImpl implements UserDao{
+import org.springframework.stereotype.Repository;
+
+import com.mthree.petadoption.model.User;
+import com.mthree.petadoption.model.UserInfo;
+import com.mthree.petadoption.repository.UserInfoRepository;
+import com.mthree.petadoption.repository.UserRepository;
+
+@Repository
+public class UserDaoImpl implements UserDao {
+
+    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
+
+    public UserDaoImpl(UserRepository userRepository,
+            UserInfoRepository userInfoRepository) {
+        this.userRepository = userRepository;
+        this.userInfoRepository = userInfoRepository;
+    }
+
     @Override
-    public User getUser(long userId) {
-        return null;
+    public Optional<User> getUser(long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
     public User createUser(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(long userId) {
-
+    public boolean deleteUser(long userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void updatePassword(long userId) {
-
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public void updateUserInfo(long userId) {
+    public Optional<UserInfo> findByUserId(Long userId) {
+        return userInfoRepository.findByUser_Id(userId);
+    }
 
+    @Override
+    public UserInfo updateUserInfo(UserInfo userInfo) {
+        return userInfoRepository.save(userInfo);
     }
 }
