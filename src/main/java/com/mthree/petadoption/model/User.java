@@ -89,6 +89,9 @@
       this.role = role;
     }
 
+    public void setId(Long id) {
+      this.id = id;
+    }
 
     /*
      * helper methods to create an empty userinfo when a new user is created

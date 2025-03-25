@@ -2,6 +2,7 @@ package com.mthree.petadoption.controller;
 
 import com.mthree.petadoption.model.Request;
 import com.mthree.petadoption.service.RequestService;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class RequestController {
     }
 
     @PostMapping ("/api/request")
-    public ResponseEntity<Void> addRequest(Request request){
+    public ResponseEntity<Void> addRequest(@RequestBody Map<String, Object> request){
         requestService.submitRequest(request);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }

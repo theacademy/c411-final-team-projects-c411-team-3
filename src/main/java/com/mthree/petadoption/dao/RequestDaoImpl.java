@@ -29,13 +29,16 @@ public class RequestDaoImpl implements RequestDao{
     }
 
     @Override
-    public Request viewRequest(long requestId) { //Roosh
+    public Request viewRequest(long requestId) {
         return requestRepository.findById(requestId).orElse(null);
     }
 
     @Override
     public Request submitRequest(Request request) {
-        if(!userRepository.existsById(request.getUser().getUserId())){
+        if(request.getUser() == null && request.getPet() == null){
+            throw new RuntimeException("You must provide at least one user and/or pet");
+        }
+        if(!userRepository.existsById(request.getUser().getId())){
             throw new RuntimeException("Invalid User ID - request rejected");
         } else if(!petRepository.existsById(request.getPet().getPetId())){
             throw new RuntimeException("Invalid Pet ID - request rejected");

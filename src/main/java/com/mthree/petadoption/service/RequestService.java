@@ -3,6 +3,7 @@ package com.mthree.petadoption.service;
 import com.mthree.petadoption.model.Request;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RequestService {
 
@@ -10,7 +11,7 @@ public interface RequestService {
 
     Request viewRequest(long requestId);
 
-    Request submitRequest(Request request);
+    Request submitRequest(Map<String, Object> requestData);
 
     void updateRequest(Long requestId, Long petId, String status);
 
