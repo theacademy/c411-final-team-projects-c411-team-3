@@ -36,10 +36,7 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<User> getUserById(@PathVariable Long id) {
     Optional<User> userOptional = userService.getUserById(id);
-    if (userOptional.isPresent()) {
-      return ResponseEntity.ok(userOptional.get());
-    }
-    return ResponseEntity.notFound().build();
+      return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @PostMapping("/register")
@@ -55,10 +52,7 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
     Optional<User> updatedUser = userService.updateUser(id, user);
-    if (updatedUser.isPresent()) {
-      return ResponseEntity.ok(updatedUser.get());
-    }
-    return ResponseEntity.notFound().build();
+      return updatedUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @DeleteMapping("/{id}")
