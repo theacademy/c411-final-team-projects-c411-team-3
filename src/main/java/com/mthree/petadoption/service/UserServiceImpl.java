@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User saveUser(User user) {
+    user.setRole(User.Role.ADOPTER);
     return userDao.createUser(user);
   }
 
@@ -39,7 +40,6 @@ public class UserServiceImpl implements UserService {
       userToUpdate.setUsername(user.getUsername());
       userToUpdate.setEmail(user.getEmail());
       userToUpdate.setPassword(user.getPassword());
-      userToUpdate.setRole(user.getRole());
       User updatedUser = userDao.updateUser(userToUpdate);
       return Optional.of(updatedUser);
     }
