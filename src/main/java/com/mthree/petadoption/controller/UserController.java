@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.mthree.petadoption.dto.UserRegistrationDTO;
 import com.mthree.petadoption.model.User;
 import com.mthree.petadoption.model.UserInfo;
 import com.mthree.petadoption.service.UserService;
@@ -41,8 +42,12 @@ public class UserController {
     return ResponseEntity.notFound().build();
   }
 
-  @PostMapping
-  public ResponseEntity<User> createUser(@RequestBody User user) {
+  @PostMapping("/register")
+  public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userDTO) {
+    User user = new User();
+    user.setUsername(userDTO.username());
+    user.setEmail(userDTO.email());
+    user.setPassword(userDTO.password());
     User createdUser = userService.saveUser(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
