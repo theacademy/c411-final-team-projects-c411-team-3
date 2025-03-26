@@ -13,15 +13,44 @@ const ProfileSetup = () => {
   const [birthDate, setBirthDate] = useState("");
   const [error, setError] = useState(null);
 
+  // Tracks if the user has focused on an input field and left it
+  const [touchedFields, setTouchedFields] = useState({
+    firstName: false,
+    lastName: false,
+    phoneNumber: false,
+    birthDate: false,
+  });
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
   useEffect(() => {
     if (!storedUser) {
       navigate("/"); // Redirect to login if no user data is found
     }
   }, [storedUser, navigate]);
 
+  useEffect(() => {
+    // Check form validity whenever an input changes
+    setIsFormValid(
+        firstName.trim() &&
+        lastName.trim() &&
+        /^\d+$/.test(phoneNumber) &&
+        birthDate.trim()
+    );
+  }, [firstName, lastName, phoneNumber, birthDate]);
+
+  const handleBlur = (field) => {
+    setTouchedFields((prev) => ({ ...prev, [field]: true }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
+
+    if (!isFormValid) {
+      setError("Please fill in all fields correctly.");
+      return;
+    }
 
     const userInfo = { firstName, lastName, phoneNumber, birthDate };
 
@@ -29,10 +58,8 @@ const ProfileSetup = () => {
       const updatedInfo = await updateUserInfo(storedUser.id, userInfo);
       console.log("Profile updated:", updatedInfo);
 
-      // Update localStorage with new user info
       localStorage.setItem("user", JSON.stringify({ ...storedUser, userInfo: updatedInfo }));
 
-      // Redirect to home/dashboard
       navigate("/home");
     } catch (err) {
       setError(typeof err === "string" ? err : "Profile update failed");
@@ -52,6 +79,9 @@ const ProfileSetup = () => {
               margin="normal"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              onBlur={() => handleBlur("firstName")}
+              error={touchedFields.firstName && !firstName.trim()}
+              helperText={touchedFields.firstName && !firstName.trim() ? "First name is required" : ""}
           />
           <TextField
               label="Last Name"
@@ -59,6 +89,9 @@ const ProfileSetup = () => {
               margin="normal"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              onBlur={() => handleBlur("lastName")}
+              error={touchedFields.lastName && !lastName.trim()}
+              helperText={touchedFields.lastName && !lastName.trim() ? "Last name is required" : ""}
           />
           <TextField
               label="Phone Number"
@@ -67,6 +100,13 @@ const ProfileSetup = () => {
               margin="normal"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              onBlur={() => handleBlur("phoneNumber")}
+              error={touchedFields.phoneNumber && !/^\d+$/.test(phoneNumber)}
+              helperText={
+                touchedFields.phoneNumber && !/^\d+$/.test(phoneNumber)
+                    ? "Phone number must contain only digits"
+                    : ""
+              }
           />
           <TextField
               label="Birthdate"
@@ -76,8 +116,17 @@ const ProfileSetup = () => {
               InputLabelProps={{ shrink: true }}
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
+              onBlur={() => handleBlur("birthDate")}
+              error={touchedFields.birthDate && !birthDate.trim()}
+              helperText={touchedFields.birthDate && !birthDate.trim() ? "Birthdate is required" : ""}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={!isFormValid}
+          >
             Save Profile
           </Button>
         </form>

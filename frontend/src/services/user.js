@@ -6,8 +6,8 @@ export const registerUser = async (username, email, password, phoneNumber) => {
       username,
       email,
       password,
-      phoneNumber, // New field added
-      role: "ADOPTER", // Automatically set role
+      phoneNumber,
+      role: "ADOPTER",
     });
     return response.data;
   } catch (error) {
@@ -18,9 +18,8 @@ export const registerUser = async (username, email, password, phoneNumber) => {
 export const loginUser = async (username, password) => {
   try {
     const response = await api.post("/users/login", { username, password });
-    return response.data; // This contains the user object if login is successful
+    return response.data;
   } catch (error) {
-    // Extract a meaningful error message
     const errorMessage =
         typeof error.response?.data === "string"
             ? error.response.data // If backend sends a string error
@@ -32,9 +31,8 @@ export const loginUser = async (username, password) => {
 export const updateUserInfo = async (userId, userInfo) => {
   try {
     const response = await api.put(`/users/${userId}/info`, userInfo);
-    return response.data; // Returns updated user info
+    return response.data;
   } catch (error) {
-    // Extract a meaningful error message
     const errorMessage =
         typeof error.response?.data === "string"
             ? error.response.data // If backend sends a plain string error
