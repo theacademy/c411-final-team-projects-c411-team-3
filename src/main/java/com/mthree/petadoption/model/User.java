@@ -17,6 +17,7 @@
   import jakarta.persistence.OneToOne;
   import jakarta.persistence.PrePersist;
   import jakarta.persistence.Table;
+  import jakarta.validation.constraints.Pattern;
 
   @Entity
   @Table(name = "users")
@@ -26,12 +27,22 @@
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "username", nullable = false, unique = true, length = 25)
+
+    @Pattern(regexp = "^[a-zA-Z0-9_]{3,20}$", message = "Username must be 3-20 characters long and only contain letters, numbers, and underscores")
+    @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
+
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     @Column(name = "email", nullable = false, length = 100)
     private String email;
+
+    @Pattern(
+            regexp = "^(?=.*\\d).{6,}$",
+            message = "Password must be at least 6 characters long and contain at least one digit"
+    )
     @Column(name = "password", nullable = false, length = 255)
     private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
     private Role role;
