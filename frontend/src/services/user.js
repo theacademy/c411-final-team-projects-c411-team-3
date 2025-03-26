@@ -29,3 +29,18 @@ export const loginUser = async (username, password) => {
     throw errorMessage;
   }
 };
+export const updateUserInfo = async (userId, userInfo) => {
+  try {
+    const response = await api.put(`/users/${userId}/info`, userInfo);
+    return response.data; // Returns updated user info
+  } catch (error) {
+    // Extract a meaningful error message
+    const errorMessage =
+        typeof error.response?.data === "string"
+            ? error.response.data // If backend sends a plain string error
+            : error.response?.data?.error || "Failed to update profile"; // Fallback message
+
+    throw errorMessage;
+  }
+};
+
