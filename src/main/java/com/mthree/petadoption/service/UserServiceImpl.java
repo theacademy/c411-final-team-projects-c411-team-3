@@ -65,4 +65,11 @@ public class UserServiceImpl implements UserService {
     }
     return Optional.empty();
   }
+
+  @Override
+  public Optional<User> findByUsername(String username) {
+    return userDao.findByUsername(username);
+  }
+
+
 }

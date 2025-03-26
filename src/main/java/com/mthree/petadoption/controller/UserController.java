@@ -1,22 +1,16 @@
 package com.mthree.petadoption.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mthree.petadoption.model.User;
 import com.mthree.petadoption.model.UserInfo;
 import com.mthree.petadoption.service.UserService;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -24,6 +18,18 @@ public class UserController {
 
   public UserController(UserService userService) {
     this.userService = userService;
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+    String username = credentials.get("username");
+    String password = credentials.get("password");
+
+    Optional<User> userOpt = userService.findByUsername(username);
+    if (userOpt.isPresent() && userOpt.get().getPassword().equals(password)) {
+      return ResponseEntity.ok(userOpt.get());
+    }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
   }
 
   @GetMapping("/{id}")

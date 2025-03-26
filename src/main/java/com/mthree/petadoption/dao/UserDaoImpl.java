@@ -54,4 +54,10 @@ public class UserDaoImpl implements UserDao {
     public UserInfo updateUserInfo(UserInfo userInfo) {
         return userInfoRepository.save(userInfo);
     }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
 }
