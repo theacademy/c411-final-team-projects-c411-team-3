@@ -1,6 +1,11 @@
 package com.mthree.petadoption.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pets")
@@ -10,24 +15,34 @@ public class Pet {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long petId;
 
+  @Column(nullable = false)
   private String species;
+  @Column(length = 50)
   private String size;
+  @Column(length = 1, nullable = false)
   private String sex;
+  @Column(length = 50)
   private String age;
+  @Column(length = 50)
   private String petName;
+  @Column(length = 50)
   private String primaryBreed;
+  @Column(length = 50)
   private String secondaryBreed;
+  @Column(length = 2)
   private String stateCode;
+  @Column(length = 25)
   private String city;
   private String photoUrl;
+  @Column(nullable = false)
   private String status;
 
   public Pet() {
   }
 
   public Pet(String species, String size, String sex, String age, String petName,
-             String primaryBreed, String secondaryBreed, String stateCode, String city,
-             String photoUrl, String status) {
+      String primaryBreed, String secondaryBreed, String stateCode, String city,
+      String photoUrl, String status) {
     this.species = species;
     this.size = size;
     this.sex = sex;
