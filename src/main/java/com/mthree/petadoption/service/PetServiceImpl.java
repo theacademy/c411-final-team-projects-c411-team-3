@@ -3,6 +3,8 @@ package com.mthree.petadoption.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mthree.petadoption.dao.PetDAO;
@@ -91,5 +93,10 @@ public class PetServiceImpl implements PetService {
     if (pet.getStatus() == null || pet.getStatus().trim().isEmpty()) {
       throw new IllegalArgumentException("Status is required.");
     }
+  }
+
+  @Override
+  public Page<Pet> getAllPets(Pageable pageable) {
+    return petDAO.findAllPets(pageable);
   }
 }
