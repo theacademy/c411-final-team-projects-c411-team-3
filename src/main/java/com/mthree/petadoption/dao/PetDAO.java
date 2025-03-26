@@ -3,10 +3,15 @@ package com.mthree.petadoption.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.mthree.petadoption.model.Pet;
 
 public interface PetDAO {
   List<Pet> findAllPets();
+
+  Page<Pet> findAllPets(Pageable pageable);
 
   Optional<Pet> findPetById(Long id);
 

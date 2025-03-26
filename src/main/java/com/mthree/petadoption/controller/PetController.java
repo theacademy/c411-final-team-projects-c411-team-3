@@ -3,6 +3,8 @@ package com.mthree.petadoption.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +21,17 @@ public class PetController {
     this.petService = petService;
   }
 
+  // leave this here temporary, might use it later
+  // will delete it later if it's not gonna be used
+  // @GetMapping("/all")
+  // public List<Pet> getAllPets() {
+  // return petService.getAllPets();
+  // }
+
   @GetMapping
-  public List<Pet> getAllPets() {
-    return petService.getAllPets();
+  public Page<Pet> getAllPets(@RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size) {
+      return petService.getAllPets(PageRequest.of(page, size));
   }
 
   @GetMapping("/{id}")

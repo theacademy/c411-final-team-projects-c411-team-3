@@ -3,6 +3,8 @@ package com.mthree.petadoption.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.mthree.petadoption.model.Pet;
@@ -48,5 +50,10 @@ public class PetDAOImpl implements PetDAO {
   @Override
   public Pet updatePet(Pet pet) {
     return petRepository.save(pet);
+  }
+
+  @Override
+  public Page<Pet> findAllPets(Pageable pageable) {
+    return petRepository.findAll(pageable);
   }
 }
