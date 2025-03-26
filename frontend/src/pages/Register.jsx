@@ -15,9 +15,9 @@ const Register = () => {
     setError(null);
 
     try {
-      await registerUser(username, email, password);
+      const user = await registerUser(username, email, password);
       console.log("User registered successfully!");
-
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("/profile-setup");
     } catch (err) {
       setError("Registration failed. Please try again.");

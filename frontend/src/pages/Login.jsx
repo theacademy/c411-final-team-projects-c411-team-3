@@ -1,31 +1,42 @@
 import React, { useState } from "react";
 import {Container, TextField, Button, Typography, Link} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import { loginUser } from "../services/user";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("Login attempt with:", { email, password });
-    // Add API call here
-  };
+    setError(null);
 
+    try {
+      const user = await loginUser(username, password);
+      console.log("User logged in:", user);
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/home");
+    } catch (err) {
+      const errorMessage = typeof err === "string" ? err : err?.error || "Invalid login credentials";
+      setError(errorMessage);
+    }
+  };
   return (
       <Container maxWidth="sm">
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
-        <form onSubmit={handleSubmit}>
+        {error && <Typography color="error">{error}</Typography>}
+        <form onSubmit={handleLogin}>
           <TextField
-              label="Email"
-              type="email"
+              label="Username"
+              type="username"
               fullWidth
               margin="normal"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
               label="Password"
