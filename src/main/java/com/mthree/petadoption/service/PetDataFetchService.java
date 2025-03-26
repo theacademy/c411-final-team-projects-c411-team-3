@@ -22,9 +22,6 @@ public class PetDataFetchService {
   @Value("${fetch.token}")
   private String SECRET;
 
-  // @Value("${api.zipcode}")
-  // private String zipCode;
-
   private static final String[] SPECIES = { "cat", "dog", "rabbit", "bird", "reptile", "small_animal" };
 
   public PetDataFetchService(PetRepository petRepository) {
