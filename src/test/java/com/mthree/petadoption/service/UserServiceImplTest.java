@@ -144,4 +144,26 @@ class UserServiceImplTest {
         Optional<UserInfo> result = userService.getUserInfoByUserId(404L);
         assertFalse(result.isPresent());
     }
+
+    // New test methods for findByUsername
+    @Test
+    void testFindByUsername_found() {
+        String usernameToFind = "tj";
+        when(userDao.findByUsername(usernameToFind)).thenReturn(Optional.of(mockUser));
+
+        Optional<User> result = userService.findByUsername(usernameToFind);
+        assertTrue(result.isPresent());
+        assertEquals(usernameToFind, result.get().getUsername());
+        verify(userDao).findByUsername(usernameToFind);
+    }
+
+    @Test
+    void testFindByUsername_notFound() {
+        String usernameToFind = "nonExistentUser";
+        when(userDao.findByUsername(usernameToFind)).thenReturn(Optional.empty());
+
+        Optional<User> result = userService.findByUsername(usernameToFind);
+        assertFalse(result.isPresent());
+        verify(userDao).findByUsername(usernameToFind);
+    }
 }

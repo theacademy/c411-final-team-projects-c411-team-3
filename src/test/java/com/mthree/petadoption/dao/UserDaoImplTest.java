@@ -113,4 +113,26 @@ class UserDaoImplTest {
         assertEquals("New", updated.getFirstName());
         verify(userInfoRepository).save(info);
     }
+
+    // Add this new test method for findByUsername
+    @Test
+    void testFindByUsername_success() {
+        String usernameToFind = "tj";
+        when(userRepository.findByUsername(usernameToFind)).thenReturn(Optional.of(mockUser));
+
+        Optional<User> result = userDao.findByUsername(usernameToFind);
+        assertTrue(result.isPresent());
+        assertEquals(usernameToFind, result.get().getUsername());
+        verify(userRepository).findByUsername(usernameToFind);
+    }
+
+    @Test
+    void testFindByUsername_notFound() {
+        String usernameToFind = "nonExistentUser";
+        when(userRepository.findByUsername(usernameToFind)).thenReturn(Optional.empty());
+
+        Optional<User> result = userDao.findByUsername(usernameToFind);
+        assertFalse(result.isPresent());
+        verify(userRepository).findByUsername(usernameToFind);
+    }
 }
