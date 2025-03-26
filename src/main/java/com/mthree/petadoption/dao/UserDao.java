@@ -18,4 +18,7 @@ public interface UserDao {
     Optional<UserInfo> findByUserId(Long userId);
 
     UserInfo updateUserInfo(UserInfo userInfo);
+
+    Optional<User> findByUsername(String username);
+
 }

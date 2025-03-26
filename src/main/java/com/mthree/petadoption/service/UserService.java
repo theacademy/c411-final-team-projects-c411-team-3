@@ -17,4 +17,7 @@ public interface UserService {
   Optional<UserInfo> getUserInfoByUserId(Long userId);
 
   Optional<UserInfo> updateUserInfo(Long userId, UserInfo userinfo);
+
+  Optional<User> findByUsername(String username);
+
 }
