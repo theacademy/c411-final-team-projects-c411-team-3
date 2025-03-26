@@ -54,6 +54,7 @@ public class RequestServiceImpl implements RequestService {
         request.setMessage(message);
         request.setRequestDate(requestDate);
         request.setStatus(Request.Status.PENDING);
+        validateRequest(request);
 
         return requestDao.submitRequest(request);
     }
@@ -67,4 +68,11 @@ public class RequestServiceImpl implements RequestService {
     public void cancelRequest(long requestId) {
         requestDao.cancelRequest(requestId);
     }
+
+    private void validateRequest(Request request) {
+        if (request.getMessage() == null || request.getMessage().trim().isEmpty()) {
+            throw new IllegalArgumentException("Message is required.");
+        }
+    }
+
 }
