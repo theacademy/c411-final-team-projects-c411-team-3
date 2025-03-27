@@ -13,15 +13,21 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
 
-  // Function to validate email format
+  // Functions to validate input format
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const isValidUsername = (username) => /^[a-zA-Z0-9_]{3,20}$/.test(username);
+  const isValidPassword = (password) => /^(?=.*\d).{6,}$/.test(password);
 
   // Function to validate form fields
   const validateForm = () => {
-    setUsernameError(!username);
-    setEmailError(!email || !isValidEmail(email));
-    setPasswordError(!password);
-    return username && email && isValidEmail(email) && password;
+    const usernameValid = isValidUsername(username);
+    const emailValid = isValidEmail(email);
+    const passwordValid = isValidPassword(password);
+
+    setUsernameError(!usernameValid);
+    setEmailError(!emailValid);
+    setPasswordError(!passwordValid);
+    return usernameValid && emailValid && passwordValid;
   };
 
   const handleSubmit = async (event) => {
@@ -57,7 +63,13 @@ const Register = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               error={usernameError}
-              helperText={usernameError ? "Username is required" : ""}
+              helperText={
+                !username
+                    ? "Enter a username (3-20 characters)"
+                    : !isValidUsername(username)
+                        ? "Only letters, numbers, underscores allowed"
+                        : ""
+              }
           />
           <TextField
               label="Email"
@@ -67,7 +79,12 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               error={emailError}
-              helperText={emailError ? "Enter a valid email address" : ""}
+              helperText={!email
+                  ? "Enter your email (e.g., name@example.com)"
+                  : !isValidEmail(email)
+                      ? "Invalid email format"
+                      : ""
+              }
           />
           <TextField
               label="Password"
@@ -77,9 +94,18 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
-              helperText={passwordError ? "Password is required" : ""}
+              helperText={!password
+                  ? "At least 6 characters and 1 digit"
+                  : !isValidPassword(password)
+                      ? "Invalid password format"
+                      : ""
+              }
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={!username || !email || !isValidEmail(email) || !password}>
+          <Button type="submit" variant="contained" color="primary" fullWidth disabled={
+              !isValidUsername(username) ||
+              !isValidEmail(email) ||
+              !isValidPassword(password)
+          }>
             Register
           </Button>
         </form>
@@ -88,3 +114,4 @@ const Register = () => {
 };
 
 export default Register;
+
