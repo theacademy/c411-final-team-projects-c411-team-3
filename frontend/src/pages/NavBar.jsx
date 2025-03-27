@@ -101,6 +101,16 @@ const NavBar = () => {
                     ))}
                   </Menu>
                 </Box>
+                {/* 👇 Admin-only button */}
+                {user.role === "ADMIN" && (
+                    <Button
+                        color="inherit"
+                        onClick={() => navigate("/requests")}
+                        sx={{ ml: 2, textTransform: "none", fontWeight: "bold" }}
+                    >
+                      Requests
+                    </Button>
+                )}
 
                 {/* Logout button */}
                 <Button
