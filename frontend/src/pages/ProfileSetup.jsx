@@ -60,7 +60,7 @@ const ProfileSetup = () => {
 
       localStorage.setItem("user", JSON.stringify({ ...storedUser, userInfo: updatedInfo }));
 
-      navigate("/home");
+      navigate("/pets");
     } catch (err) {
       setError(typeof err === "string" ? err : "Profile update failed");
     }
