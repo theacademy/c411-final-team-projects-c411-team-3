@@ -30,6 +30,7 @@ const Login = () => {
       const user = await loginUser(username, password);
       console.log("User logged in:", user);
       localStorage.setItem("user", JSON.stringify(user));
+      window.dispatchEvent(new Event("userChanged"));
       navigate("/pets"); //placeholder
     } catch (err) {
       const errorMessage = typeof err === "string" ? err : err?.error || "Invalid login credentials";
