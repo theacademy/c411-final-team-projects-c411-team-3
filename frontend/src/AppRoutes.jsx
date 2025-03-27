@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProfileSetup from "./pages/ProfileSetup";
+import AllRequests from "./pages/AllRequests";
 import AllPetsPage from "./pages/AllPetsPage";
 import PetDetailPage from "./pages/PetDetailPage";
 import Navbar from "./pages/NavBar";
@@ -18,9 +19,11 @@ const AppRoutes = () => {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile-setup" element={<ProfileSetup />} />
+          <Route path="/requests" element={<AllRequests />} />
           <Route path="/pets" element={<AllPetsPage />} />
           <Route path="/pets/:id" element={<PetDetailPage />} />
           <Route path="/pets/species/:species" element={<SpeciesPetsPage/>} />
+
         </Routes>
       </Router>
   );
