@@ -3,6 +3,7 @@ package com.mthree.petadoption.controller;
 import java.util.Map;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userDTO) {
+  public ResponseEntity<User> createUser(@Valid @RequestBody UserRegistrationDTO userDTO) {
     User user = new User();
     user.setUsername(userDTO.username());
     user.setEmail(userDTO.email());

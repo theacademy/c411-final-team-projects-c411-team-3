@@ -16,7 +16,7 @@ const Register = () => {
   // Functions to validate input format
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
   const isValidUsername = (username) => /^[a-zA-Z0-9_]{3,20}$/.test(username);
-  const isValidPassword = (password) => password.length >= 6;
+  const isValidPassword = (password) => /^(?=.*\d).{6,}$/.test(password);
 
   // Function to validate form fields
   const validateForm = () => {
@@ -95,9 +95,9 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
               helperText={!password
-                  ? "At least 6 characters"
+                  ? "At least 6 characters and 1 digit"
                   : !isValidPassword(password)
-                      ? "Password too short"
+                      ? "Invalid password format"
                       : ""
               }
           />

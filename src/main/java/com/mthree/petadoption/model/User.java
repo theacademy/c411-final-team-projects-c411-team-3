@@ -32,7 +32,7 @@
     @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
 
-    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
+    @Pattern(regexp = "\\S+@\\S+\\.\\S+", message = "Invalid email format")
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
