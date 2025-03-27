@@ -83,8 +83,11 @@ const AllPetsPage = () => {
                     size="small"
                     variant="contained"
                     color="primary"
-                    sx={{ textTransform: 'none', fontWeight: 'bold', boxShadow: 2, fontSize: '1.15rem'}}
-                    onClick={() => navigate(`/pets/${pet.petId}`)}
+                    sx={{ textTransform: 'none', fontWeight: 'bold', boxShadow: 2, fontSize: '1.15rem' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/pets/${pet.petId}`);
+                    }}
                   >
                     Learn More
                   </Button>
@@ -101,7 +104,7 @@ const AllPetsPage = () => {
           page={page}
           onChange={handlePageChange}
           color="primary"
-          sx={{p: 4}}
+          sx={{ p: 4 }}
         />
       </Box>
     </Container>
