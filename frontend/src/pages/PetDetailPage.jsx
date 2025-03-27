@@ -14,6 +14,7 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
+import {createRequest} from "../services/request";
 
 const PetDetailPage = () => {
   const { id } = useParams();
@@ -49,10 +50,31 @@ const PetDetailPage = () => {
     setOpenModal(false);
   };
 
-  const handleSubmit = () => {
-    console.log("Submit clicked with adoption date:", adoptionMessage);
-    setOpenModal(false);
-    navigate("/pets");
+  const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("You must be logged in to adopt a pet.");
+      setOpenModal(false);
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const requestData = {
+      petId: parseInt(id),
+      userId: user.id,
+      message: adoptionMessage,
+      requestDate: today
+    };
+
+    try {
+      await createRequest(requestData);
+      setOpenModal(false);
+      alert("Successfully sent the request to adopt a pet.");
+      navigate("/pets");
+    } catch (error) {
+      alert("There was an error submitting your request. Please try again.");
+    }
   };
 
   if (loading) {
