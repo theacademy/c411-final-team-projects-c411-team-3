@@ -59,6 +59,9 @@ const AllRequests = () => {
         minHeight: '100vh',
       }}
     >
+      <Typography variant="h4" component="h1" gutterBottom>
+        View All Requests
+      </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: 'lightblue' }}>
