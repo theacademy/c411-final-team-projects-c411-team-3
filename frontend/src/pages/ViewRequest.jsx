@@ -38,7 +38,14 @@ function ViewRequest() {
 
     // get info from local storage
     const user = localStorage.getItem("user");
-    const role = user?.role;
+    if (!user) {
+        navigate("/");  // redirect to login page if no user is found in localStorage
+        return <div>You are not logged in. Redirecting...</div>;
+    }
+    const parsedUser = JSON.parse(user);
+    console.log(user);
+    const role = parsedUser?.role;
+    console.log(role);
 
     const fetchRequestById = async (id) => {
         setIsFetching(true);
@@ -182,7 +189,7 @@ function ViewRequest() {
                                         disabled={isCanceling}>
                                     {isCanceling ? 'Canceling Request...' : 'Cancel Request'}
                                 </Button>
-                                {role === user.role.ADMIN && (
+                                {role === "ADMIN" && (
                                     <Button variant="contained"
                                             color="primary"
                                             onClick={() => setIsEditing(true)} // Start editing
@@ -224,16 +231,16 @@ function ViewRequest() {
                                 >
                                     {isUpdating ? 'Updating...' : 'Submit Update'}
                                 </Button>
-                                {role === "ADMIN" && (
                                     <Button variant="contained"
                                             color="primary"
                                             onClick={() => setIsEditing(true)} // Start editing
                                             disabled={isUpdating}>
                                         {isUpdating ? 'Updating Request...' : 'Update Request'}
                                     </Button>
-                                )}
+
                             </Stack>
                         </Box>
+
                     )}
 
 
