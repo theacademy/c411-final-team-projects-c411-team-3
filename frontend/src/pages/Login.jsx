@@ -38,11 +38,17 @@ const Login = () => {
   };
 
   return (
-      <Container maxWidth="sm">
-        <Typography variant="h4" gutterBottom>
-          Login
+      <Container maxWidth="sm" sx={{ textAlign: "center", mt: 8 }}>
+        <Typography variant="h3" gutterBottom sx={{ fontFamily: "Georgia, serif", color: "#6d4c41" }}>
+          Welcome to our Pet Adoption Site 🐾
         </Typography>
+
+        <Typography variant="h4" gutterBottom sx={{ fontFamily: "Georgia, serif" }}>
+          Please Login to our website
+        </Typography>
+
         {error && <Typography color="error">{error}</Typography>}
+
         <form onSubmit={handleLogin}>
           <TextField
               label="Username"
@@ -64,10 +70,18 @@ const Login = () => {
               error={passwordError}
               helperText={passwordError ? "Password is required" : ""}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={!username || !password}>
+          <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={!username || !password}
+              sx={{ mt: 2 }}
+          >
             Sign In
           </Button>
         </form>
+
         <Typography variant="body1" sx={{ marginTop: 2 }}>
           Don't have an account?{" "}
           <Link component="button" onClick={() => navigate("/register")} color="primary">
