@@ -3,6 +3,7 @@ package com.mthree.petadoption.controller;
 import java.util.Map;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +37,11 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<User> getUserById(@PathVariable Long id) {
     Optional<User> userOptional = userService.getUserById(id);
-    if (userOptional.isPresent()) {
-      return ResponseEntity.ok(userOptional.get());
-    }
-    return ResponseEntity.notFound().build();
+      return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @PostMapping("/register")
-  public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userDTO) {
+  public ResponseEntity<User> createUser(@Valid @RequestBody UserRegistrationDTO userDTO) {
     User user = new User();
     user.setUsername(userDTO.username());
     user.setEmail(userDTO.email());
@@ -55,10 +53,7 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
     Optional<User> updatedUser = userService.updateUser(id, user);
-    if (updatedUser.isPresent()) {
-      return ResponseEntity.ok(updatedUser.get());
-    }
-    return ResponseEntity.notFound().build();
+      return updatedUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @DeleteMapping("/{id}")

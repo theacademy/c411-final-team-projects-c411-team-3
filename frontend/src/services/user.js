@@ -2,7 +2,7 @@ import api from "./api";
 
 export const registerUser = async (username, email, password, phoneNumber) => {
   try {
-    const response = await api.post("/users", {
+    const response = await api.post("/users/register", {
       username,
       email,
       password,
