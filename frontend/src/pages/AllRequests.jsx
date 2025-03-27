@@ -18,6 +18,11 @@ const AllRequests = () => {
   const [error, setError] = useState(null);
   const [clickedRowId, setClickedRowId] = useState(null);
 
+  // Get user role from local storage
+  const storedUser = localStorage.getItem('user');
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const userRole = user ? user.role : null;
+
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true);
@@ -32,13 +37,29 @@ const AllRequests = () => {
       }
     };
 
-    fetchRequests();
-  }, []);
+    // Only fetch requests if the user is an admin
+    if (userRole === 'ADMIN') {
+      fetchRequests();
+    } else {
+      setLoading(false); // Set loading to false if not an admin
+    }
+  }, [userRole]);
 
   const handleRowClick = (requestId) => {
     console.log(`Clicked request with ID: ${requestId}`);
     setClickedRowId(requestId);
   };
+
+  // Render permission denied message if not an admin
+  if (userRole !== 'ADMIN') {
+    return (
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Typography variant="h6" color="error">
+          You do not have permission to view this page.
+        </Typography>
+      </Container>
+    );
+  }
 
   if (loading) {
     return <Typography variant="h6">Loading requests...</Typography>;
