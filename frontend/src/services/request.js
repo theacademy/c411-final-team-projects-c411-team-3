@@ -58,7 +58,7 @@ export const viewRequest = async (requestId) => {
 
 export const viewRequestByUserId = async (userId) => {
     try {
-        const response = await api.get(`/requests/userid/${requestId}`);
+        const response = await api.get(`/requests/userid/${userId}`);
         return response.data;
     } catch (error) {
         const errorMessage =
