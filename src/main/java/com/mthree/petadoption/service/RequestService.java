@@ -9,6 +9,8 @@ public interface RequestService {
 
     List<Request> listAllRequests();
 
+    List<Request> getAllRequestsByUserId(Long id);
+
     Request viewRequest(long requestId);
 
     Request submitRequest(Map<String, Object> requestData);

@@ -29,6 +29,11 @@ public class RequestDaoImpl implements RequestDao{
     }
 
     @Override
+    public List<Request> getAllRequestsByUserId(Long userId) {
+        return requestRepository.findAllByUserId(userId);
+    }
+
+    @Override
     public Request viewRequest(long requestId) {
         return requestRepository.findById(requestId).orElse(null);
     }

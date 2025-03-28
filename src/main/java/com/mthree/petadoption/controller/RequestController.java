@@ -29,6 +29,12 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.OK).body(request);
     }
 
+    @GetMapping("/api/requests/userid/{id}")
+    public ResponseEntity<List<Request>> getAllRequestsByUserId(@PathVariable("id") Long id){
+        List<Request> requestList = requestService.getAllRequestsByUserId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(requestList);
+    }
+
     @PostMapping ("/api/request")
     public ResponseEntity<Void> addRequest(@RequestBody Map<String, Object> request){
         requestService.submitRequest(request);
