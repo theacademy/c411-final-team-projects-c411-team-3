@@ -22,4 +22,6 @@ public interface PetDAO {
   boolean deletePet(Long id);
 
   List<Pet> findPetBySpecies(String species);
+
+  Page<Pet> findPetBySpecies(String species, Pageable pageable);
 }

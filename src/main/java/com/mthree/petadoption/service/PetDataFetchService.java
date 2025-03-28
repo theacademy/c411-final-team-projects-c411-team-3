@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.mthree.petadoption.dto.PetApiDTO;
-import com.mthree.petadoption.dto.PetApiResponseDTO;
+import com.mthree.petadoption.dto.petapi.PetApiDTO;
+import com.mthree.petadoption.dto.petapi.PetApiResponseDTO;
 import com.mthree.petadoption.model.Pet;
 import com.mthree.petadoption.repository.PetRepository;
 
