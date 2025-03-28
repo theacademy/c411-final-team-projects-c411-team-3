@@ -9,6 +9,8 @@ import PetDetailPage from "./pages/PetDetailPage";
 import Navbar from "./pages/NavBar";
 import { Box } from "@mui/material";
 import SpeciesPetsPage from "./pages/SpeciesPetsPage";
+import EditPetPage from "./pages/EditPetPage";
+
 
 const AppRoutes = () => {
   return (
@@ -24,7 +26,7 @@ const AppRoutes = () => {
           <Route path="/pets" element={<AllPetsPage />} />
           <Route path="/pets/:id" element={<PetDetailPage />} />
           <Route path="/pets/species/:species" element={<SpeciesPetsPage/>} />
-
+          <Route path="/edit-pet/:id" element={<EditPetPage />} />
         </Routes>
       </Router>
   );

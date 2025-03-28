@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import {
   Container,
   Card,
@@ -15,6 +16,10 @@ const PetDetailPage = () => {
   const [pet, setPet] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = user?.role === "ADMIN";
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/pets/${id}`)
@@ -97,6 +102,16 @@ const PetDetailPage = () => {
             >
               Adopt Me Now!
             </Button>
+
+            {isAdmin && (
+                <Button
+                    variant="contained"
+                    sx={{ px: 4, fontWeight: "bold", fontSize: "1rem", textTransform: "none", ml: 2 }}
+                    onClick={() => navigate(`/edit-pet/${pet.petId}`)}
+                >
+                  Edit
+                </Button>
+            )}
           </Box>
         </Box>
       </Card>
