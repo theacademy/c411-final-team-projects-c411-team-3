@@ -12,6 +12,7 @@ export const createRequest = async (requestData) => {
 
 export const updateRequest = async (requestId, petId, status) => {
     try {
+        console.log("requestId:" + requestId + "petId: " + petId + " status: " + status);
         const response = await api.put(`/request/${requestId}`, {
             requestId,
             petId,
