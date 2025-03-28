@@ -8,6 +8,8 @@ import java.util.List;
 public interface RequestDao {
     List<Request> listAllRequests();
 
+    List<Request> getAllRequestsByUserId(Long userId);
+
     Request viewRequest(long requestId);
 
     Request submitRequest(Request request);

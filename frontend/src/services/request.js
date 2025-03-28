@@ -56,3 +56,17 @@ export const viewRequest = async (requestId) => {
     }
 };
 
+export const viewRequestByUserId = async (userId) => {
+    try {
+        const response = await api.get(`/requests/userid/${userId}`);
+        return response.data;
+    } catch (error) {
+        const errorMessage =
+            typeof error.response?.data === "string"
+                ? error.response.data // If backend sends a string error
+                : error.response?.data?.error || "Failed to fetch request"; // Fallback message
+
+        throw errorMessage;
+    }
+};
+
