@@ -17,5 +17,7 @@ public interface RequestService {
 
     void updateRequest(Long requestId, Long petId, String status);
 
+    void updateRequestStatus(Long requestId, String status);
+
     void cancelRequest(long requestId);
 }

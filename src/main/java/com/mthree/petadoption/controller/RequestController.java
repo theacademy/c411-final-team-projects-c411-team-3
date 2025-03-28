@@ -1,5 +1,6 @@
 package com.mthree.petadoption.controller;
 
+import com.mthree.petadoption.dto.RequestUpdateStatusDTO;
 import com.mthree.petadoption.model.Request;
 import com.mthree.petadoption.service.RequestService;
 import java.util.Map;
@@ -42,9 +43,8 @@ public class RequestController {
     }
 
     @PutMapping("/api/request/{id}")
-    public ResponseEntity<Void> updateRequest(@PathVariable("id") Long id, @RequestParam(required = false) Long petId,
-        @RequestParam(required = false) String status){
-        requestService.updateRequest(id, petId, status);
+    public ResponseEntity<Void> updateRequest(@PathVariable("id") Long id,  @RequestBody RequestUpdateStatusDTO requestUpdateStatusDTO){
+        requestService.updateRequestStatus(id, requestUpdateStatusDTO.getStatus());
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
