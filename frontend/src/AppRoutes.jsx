@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -13,7 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import EditPetPage from "./pages/EditPetPage";
-
+import UserRequests from "./pages/UserRequests"; // Import the UserRequests component
 
 const AppRoutes = () => {
   return (
@@ -52,6 +53,11 @@ const AppRoutes = () => {
         <Route path="/pets/species/:species" element={
           <ProtectedRoute>
             <SpeciesPetsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/my-requests" element={ // Add this route for user requests
+          <ProtectedRoute>
+            <UserRequests />
           </ProtectedRoute>
         } />
         <Route path="*" element={<NotFoundPage />} />
