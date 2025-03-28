@@ -148,6 +148,7 @@ const PetDetailPage = () => {
                   variant="contained"
                   sx={{ px: 4, fontWeight: "bold", fontSize: "1rem", textTransform: "none" }}
                   onClick={handleOpenModal}
+                  disabled={pet.status === "adopted"}
               >
                 Adopt Me Now!
               </Button>
@@ -155,7 +156,7 @@ const PetDetailPage = () => {
                   <Button
                       variant="contained"
                       sx={{ px: 4, fontWeight: "bold", fontSize: "1rem", textTransform: "none", ml: 2 }}
-                      onClick={() => navigate(`/edit-pet/${pet.petId}`)}
+                      onClick={() => navigate(`/pets/edit/${pet.petId}`)}
                   >
                     Edit
                   </Button>
