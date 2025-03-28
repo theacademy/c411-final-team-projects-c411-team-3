@@ -9,18 +9,28 @@ import {
   Paper,
   Container,
   Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@mui/material';
-import { viewRequestByUserId } from '../services/request';
+import { viewRequestByUserId, cancelRequest } from '../services/request';
 
 const UserRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [requestIdToDelete, setRequestIdToDelete] = useState(null);
 
-  // Get user ID from local storage
-  const storedUser = localStorage.getItem('user');
-  const user = storedUser ? JSON.parse(storedUser) : null;
-  const userId = user ? user.id : null; // Assuming your User object has an 'id' property
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    setUserId(user?.id);
+  }, []);
 
   useEffect(() => {
     const fetchUserRequests = async () => {
@@ -40,11 +50,36 @@ const UserRequests = () => {
 
     if (userId) {
       fetchUserRequests();
-    } else {
+    } else if (userId === null && !loading) {
       setLoading(false);
-      setError("User ID not found. Please log in again.");
+      setError("User not logged in or user ID not found.");
     }
   }, [userId]);
+
+  const handleCancelClick = (requestId) => {
+    setRequestIdToDelete(requestId);
+    setIsConfirmationOpen(true);
+  };
+
+  const handleConfirmationClose = () => {
+    setIsConfirmationOpen(false);
+    setRequestIdToDelete(null);
+  };
+
+  const handleCancelConfirm = async () => {
+    setIsConfirmationOpen(false);
+    try {
+      await cancelRequest(requestIdToDelete);
+      // Remove the deleted request from the state to update the UI
+      setRequests(requests.filter((request) => request.requestId !== requestIdToDelete));
+      setRequestIdToDelete(null);
+      // Optionally, show a success message
+      console.log(`Request with ID ${requestIdToDelete} cancelled successfully.`);
+    } catch (err) {
+      setError(err.message || 'Failed to cancel the request.');
+      console.error("Error cancelling request:", err);
+    }
+  };
 
   if (loading) {
     return <Typography variant="h6">Loading your requests...</Typography>;
@@ -82,6 +117,7 @@ const UserRequests = () => {
               <TableCell align="right">Request Date</TableCell>
               <TableCell>Message</TableCell>
               <TableCell align="right">Status</TableCell>
+              <TableCell align="right">Action</TableCell> {/* New column for the cancel button */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -94,11 +130,43 @@ const UserRequests = () => {
                 <TableCell align="right">{request.requestDate}</TableCell>
                 <TableCell>{request.message}</TableCell>
                 <TableCell align="right">{request.status}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    color="secondary"
+                    size="small"
+                    onClick={() => handleCancelClick(request.requestId)}
+                  >
+                    Cancel
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={isConfirmationOpen}
+        onClose={handleConfirmationClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Cancellation"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to cancel this request? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleConfirmationClose} color="primary">
+            No
+          </Button>
+          <Button onClick={handleCancelConfirm} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
