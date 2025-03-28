@@ -9,26 +9,54 @@ import PetDetailPage from "./pages/PetDetailPage";
 import Navbar from "./pages/NavBar";
 import { Box } from "@mui/material";
 import SpeciesPetsPage from "./pages/SpeciesPetsPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
+import NotFoundPage from "./pages/NotFoundPage";
 import EditPetPage from "./pages/EditPetPage";
 
 
 const AppRoutes = () => {
   return (
-      <Router>
-        <Navbar />
-        <Box sx={{ height: '80px' }} />
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile-setup" element={<ProfileSetup />} />
-            <Route path="/view-request" element={<ViewRequest />} />
-          <Route path="/requests" element={<AllRequests />} />
-          <Route path="/pets" element={<AllPetsPage />} />
-          <Route path="/pets/:id" element={<PetDetailPage />} />
-          <Route path="/pets/species/:species" element={<SpeciesPetsPage/>} />
-          <Route path="/edit-pet/:id" element={<EditPetPage />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Navbar />
+      <Box sx={{ height: '80px' }} />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile-setup" element={<ProfileSetup />} />
+        <Route path="/requests" element={
+          <AdminRoute>
+            <AllRequests />
+          </AdminRoute>
+        } />
+        <Route path="/view-request" element={
+          <AdminRoute>
+            <ViewRequest />
+          </AdminRoute>
+        } />
+        <Route path="/edit-pet/:id" element={
+          <AdminRoute>
+            <EditPetPage />
+          </AdminRoute>
+        } />
+        <Route path="/pets" element={
+          <ProtectedRoute>
+            <AllPetsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/pets/:id" element={
+          <ProtectedRoute>
+            <PetDetailPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/pets/species/:species" element={
+          <ProtectedRoute>
+            <SpeciesPetsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 };
 
