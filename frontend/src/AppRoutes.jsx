@@ -34,7 +34,7 @@ const AppRoutes = () => {
             <ViewRequest />
           </AdminRoute>
         } />
-        <Route path="/edit-pet/:id" element={
+        <Route path="/pets/edit/:id" element={
           <AdminRoute>
             <EditPetPage />
           </AdminRoute>
