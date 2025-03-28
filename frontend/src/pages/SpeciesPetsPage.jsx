@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Container,
   Grid,
@@ -10,30 +10,42 @@ import {
   CircularProgress,
   Box,
   Button,
+  Pagination,
 } from "@mui/material";
 
 const DEFAULT_IMAGE = "/default-pet.jpg";
+const PAGE_SIZE = 12;
 
 const SpeciesPetsPage = () => {
   const { species } = useParams();
   const [pets, setPets] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const page = parseInt(searchParams.get("page") || "1", 10);
+
   useEffect(() => {
-    fetch(`http://localhost:8080/api/pets/species/${species}`)
+    setLoading(true);
+    fetch(`http://localhost:8080/api/pets/species/${species}?page=${page - 1}&size=${PAGE_SIZE}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch pets");
         return res.json();
       })
       .then((data) => {
-        setPets(data);
+        setPets(data.content || []);
+        setTotalPages(data.totalPages || 1);
         setError(false);
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  }, [species]);
+  }, [species, page]);
+
+  const handlePageChange = (event, value) => {
+    setSearchParams({ page: value });
+  };
 
   if (loading) {
     return (
@@ -120,7 +132,10 @@ const SpeciesPetsPage = () => {
                       boxShadow: 2,
                       fontSize: "1.15rem",
                     }}
-                    onClick={() => navigate(`/pets/${pet.petId}`)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevents triggering CardActionArea
+                      navigate(`/pets/${pet.petId}`);
+                    }}
                   >
                     Learn More
                   </Button>
@@ -130,6 +145,16 @@ const SpeciesPetsPage = () => {
           </Grid>
         ))}
       </Grid>
+
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+          sx={{ p: 4 }}
+        />
+      </Box>
     </Container>
   );
 };

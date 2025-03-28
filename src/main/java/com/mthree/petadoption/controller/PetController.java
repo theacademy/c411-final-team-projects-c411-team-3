@@ -1,16 +1,26 @@
 package com.mthree.petadoption.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.mthree.petadoption.dto.pet.PetResponse;
 import com.mthree.petadoption.model.Pet;
 import com.mthree.petadoption.service.PetService;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/pets")
@@ -30,8 +40,8 @@ public class PetController {
 
   @GetMapping
   public Page<Pet> getAllPets(@RequestParam(defaultValue = "0") int page,
-    @RequestParam(defaultValue = "10") int size) {
-      return petService.getAllPets(PageRequest.of(page, size));
+      @RequestParam(defaultValue = "10") int size) {
+    return petService.getAllPets(PageRequest.of(page, size));
   }
 
   @GetMapping("/{id}")
@@ -69,11 +79,17 @@ public class PetController {
   }
 
   @GetMapping("/species/{species}")
-  public ResponseEntity<List<Pet>> getPetsBySpecies(@PathVariable String species) {
-    List<Pet> pets = petService.getPetsBySpecies(species);
-    if (pets == null || pets.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok(pets);
+  public ResponseEntity<PetResponse> getPetsBySpecies(
+      @PathVariable String species,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size) {
+    Page<Pet> petsPage = petService.getPetsBySpecies(species, PageRequest.of(page, size));
+    return ResponseEntity.ok(new PetResponse(
+        petsPage.getContent(),
+        petsPage.getNumber(),
+        petsPage.getSize(),
+        petsPage.getTotalElements(),
+        petsPage.getTotalPages(),
+        petsPage.isLast()));
   }
 }

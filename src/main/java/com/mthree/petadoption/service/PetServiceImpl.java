@@ -24,6 +24,11 @@ public class PetServiceImpl implements PetService {
   }
 
   @Override
+  public Page<Pet> getAllPets(Pageable pageable) {
+    return petDAO.findAllPets(pageable);
+  }
+
+  @Override
   public Optional<Pet> getPetById(Long id) {
     return petDAO.findPetById(id);
   }
@@ -42,6 +47,11 @@ public class PetServiceImpl implements PetService {
   @Override
   public List<Pet> getPetsBySpecies(String species) {
     return petDAO.findPetBySpecies(species);
+  }
+
+  @Override
+  public Page<Pet> getPetsBySpecies(String species, Pageable pageable) {
+    return petDAO.findPetBySpecies(species, pageable);
   }
 
   @Override
@@ -93,10 +103,5 @@ public class PetServiceImpl implements PetService {
     if (pet.getStatus() == null || pet.getStatus().trim().isEmpty()) {
       throw new IllegalArgumentException("Status is required.");
     }
-  }
-
-  @Override
-  public Page<Pet> getAllPets(Pageable pageable) {
-    return petDAO.findAllPets(pageable);
   }
 }

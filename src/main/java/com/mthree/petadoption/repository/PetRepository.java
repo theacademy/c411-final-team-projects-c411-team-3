@@ -12,4 +12,6 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
   List<Pet> findBySpecies(String species);
 
   Page<Pet> findAll(Pageable pageable);
+
+  Page<Pet> findBySpecies(String species, Pageable pageable);
 }

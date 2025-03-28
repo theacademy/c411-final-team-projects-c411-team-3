@@ -1,4 +1,4 @@
-package com.mthree.petadoption.dto;
+package com.mthree.petadoption.dto.petapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

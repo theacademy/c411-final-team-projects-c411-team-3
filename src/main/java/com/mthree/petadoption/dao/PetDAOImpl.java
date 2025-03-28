@@ -56,4 +56,9 @@ public class PetDAOImpl implements PetDAO {
   public Page<Pet> findAllPets(Pageable pageable) {
     return petRepository.findAll(pageable);
   }
+
+  @Override
+  public Page<Pet> findPetBySpecies(String species, Pageable pageable) {
+    return petRepository.findBySpecies(species, pageable);
+  }
 }

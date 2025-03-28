@@ -22,4 +22,6 @@ public interface PetService {
   List<Pet> getPetsBySpecies(String species);
 
   Page<Pet> getAllPets(Pageable pageable);
+
+  Page<Pet> getPetsBySpecies(String species, Pageable pageable);
 }
