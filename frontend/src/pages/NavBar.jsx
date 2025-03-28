@@ -70,13 +70,18 @@ const NavBar = () => {
   return (
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Typography
-              variant="h6"
-              onClick={() => navigate("/")}
-              sx={{ flexGrow: 1, cursor: "pointer" }}
-          >
-            Pet Adoption
-          </Typography>
+        <Box
+          component="img"
+          src="/logo.png"
+          sx={{
+            maxHeight:60,
+            width: 'auto',
+            height: 'auto',
+            cursor: 'pointer'
+          }}
+          onClick={() => navigate("/pets")}
+        ></Box>
+        <Box sx={{ flexGrow: 1 }} />
 
           {user && (
               <>
