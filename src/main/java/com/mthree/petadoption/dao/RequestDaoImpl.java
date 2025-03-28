@@ -73,6 +73,20 @@ public class RequestDaoImpl implements RequestDao{
     }
 
     @Override
+    public void updateRequestStatus(Long requestId, String status) {
+        // Fetch the request by ID
+        Request request = requestRepository.findById(requestId).orElse(null);
+
+        // Only update the status field
+        if (status != null) {
+            request.setStatus(Request.Status.valueOf(status.toUpperCase()));
+        }
+
+        // Save the updated request
+        requestRepository.save(request);
+    }
+
+    @Override
     public void cancelRequest(long requestId) {
         requestRepository.deleteById(requestId);
     }

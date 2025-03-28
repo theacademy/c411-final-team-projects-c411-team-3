@@ -80,4 +80,9 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
+    @Override
+    public void updateRequestStatus(Long requestId, String status) {
+        requestDao.updateRequestStatus(requestId, status);
+    }
+
 }

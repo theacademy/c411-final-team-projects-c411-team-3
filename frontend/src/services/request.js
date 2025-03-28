@@ -12,11 +12,17 @@ export const createRequest = async (requestData) => {
 
 export const updateRequest = async (requestId, petId, status) => {
     try {
-        const response = await api.put(`/request/${requestId}`, {
+        console.log("requestId:" + requestId + "petId: " + petId + " status: " + status);
+       /* const response = await api.put(`/request/${requestId}`, {
             requestId,
             petId,
             status,
-        });
+        }); */
+        const requestData = {
+            status: status
+        };
+
+        const response = await api.put(`/request/${requestId}`, requestData);
         return response.data;
     } catch (error) {
         const errorMessage =
