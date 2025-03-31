@@ -13,7 +13,7 @@ Admin panel for pet and request management
 
 ## Tech Stack
 - **Backend**: Java, Spring Boot  
-- **Database**: PostgreSQL  
+- **Database**: MySQL  
 - **ORM**: Spring Data JPA  
 - **API Documentation**: Swagger (optional)  
 - **Build Tool**: Maven  
