@@ -116,6 +116,15 @@ const NavBar = () => {
                       Requests
                     </Button>
                 )}
+                {user.role === "ADOPTER" && (
+                    <Button
+                        color="inherit"
+                        onClick={() => navigate("/my-requests")}
+                        sx={{ ml: 2, textTransform: "none", fontWeight: "bold" }}
+                    >
+                      My Requests
+                    </Button>
+                )}
 
                 {/* Logout button */}
                 <Button
