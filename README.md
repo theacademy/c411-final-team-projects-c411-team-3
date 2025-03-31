@@ -59,9 +59,15 @@ src/
 | PUT    | `/api/users/{id}/info`     | Update user profile information     |
 
 ## **Entity-Relationship Diagram (ERD)**
-![ERD Placeholder](https://github.com/user-attachments/assets/61a80541-e74c-4dcc-a1ea-0e70384894ba)
+![ERD](https://github.com/user-attachments/assets/61a80541-e74c-4dcc-a1ea-0e70384894ba)
 
 ---
 
 ##  **Application Flowchart**
-![Flowchart Placeholder](https://github.com/user-attachments/assets/c519d484-f643-4a29-b0cf-0e1baade1871)
+![Flowchart](https://github.com/user-attachments/assets/c519d484-f643-4a29-b0cf-0e1baade1871)
+
+---
+
+##  **Application UML**
+![UML](https://github.com/user-attachments/assets/7daaf0a6-a27c-4900-b0be-da5c46e81c8d)
+
